@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Growth Accelerator - Scale Your Business</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { primary: "#0066ff", secondary: "#111827" },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+    <style>
+      :where([class^="ri-"])::before { content: "\f3c2"; }
+      body {
+      font-family: 'Inter', sans-serif;
+      }
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+      }
+      .video-container {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      height: 100vh;
+      }
+      .video-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1;
+      }
+      .video-content {
+      position: relative;
+      z-index: 2;
+      }
+      .testimonial-video {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      }
+      .testimonial-video:hover {
+      transform: translateY(-5px);
+      }
+      .play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease;
+      }
+      .testimonial-video:hover .play-button {
+      background-color: rgba(255, 255, 255, 0.3);
+      }
+      .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      }
+      .modal-content {
+      width: 80%;
+      max-width: 800px;
+      position: relative;
+      }
+      .close-modal {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+      }
+      .before-after-slider {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      }
+      .slider-before, .slider-after {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      transition: opacity 0.3s ease;
+      }
+      .slider-before {
+      z-index: 1;
+      }
+      .slider-after {
+      opacity: 0;
+      z-index: 2;
+      }
+      .before-after-slider:hover .slider-before {
+      opacity: 0;
+      }
+      .before-after-slider:hover .slider-after {
+      opacity: 1;
+      }
+      .custom-checkbox {
+      position: relative;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
+      }
+      .custom-checkbox input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      }
+      .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 20px;
+      width: 20px;
+      background-color: #fff;
+      border: 2px solid #d1d5db;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      }
+      .custom-checkbox input:checked ~ .checkmark {
+      background-color: #0066ff;
+      border-color: #0066ff;
+      }
+      .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+      }
+      .custom-checkbox input:checked ~ .checkmark:after {
+      display: block;
+      }
+      .custom-checkbox .checkmark:after {
+      left: 6px;
+      top: 2px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+      }
+      .date-selector {
+      position: relative;
+      }
+      .date-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+      max-height: 300px;
+      overflow-y: auto;
+      }
+      .time-selector {
+      position: relative;
+      }
+      .time-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+      max-height: 300px;
+      overflow-y: auto;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-black bg-opacity-90 text-white z-50 py-4">
+      <div class="container mx-auto px-6 flex justify-between items-center">
+        <div class="font-['Pacifico'] text-2xl text-white">logo</div>
+        <div class="hidden md:flex space-x-8">
+          <a href="#home" class="hover:text-primary transition">Home</a>
+          <a href="#results" class="hover:text-primary transition">Results</a>
+          <a href="#testimonials" class="hover:text-primary transition"
+            >Testimonials</a
+          >
+          <a href="#portfolio" class="hover:text-primary transition"
+            >Portfolio</a
+          >
+          <a href="#booking" class="hover:text-primary transition"
+            >Book a Call</a
+          >
+        </div>
+        <button
+          class="bg-primary text-white px-6 py-2 !rounded-button font-medium hover:bg-opacity-90 transition whitespace-nowrap"
+        >
+          Get Started
+        </button>
+      </div>
+    </nav>
+    <!-- Hero Section with Video Background -->
+    <section id="home" class="video-container relative">
+      <div
+        style="background-image: url('https://readdy.ai/api/search-image?query=professional%20business%20meeting%20in%20a%20modern%20office%20with%20dark%20lighting%2C%20business%20people%20discussing%20growth%20strategies%2C%20cinematic%20lighting%2C%20dark%20atmosphere%2C%20business%20professionals%20in%20suits%2C%20high-quality%20cinematic%20shot&width=1920&height=1080&seq=1&orientation=landscape');"
+        class="absolute inset-0 bg-cover bg-center"
+      ></div>
+      <div class="video-content flex items-center h-full">
+        <div class="container mx-auto px-6 pt-20">
+          <div class="max-w-3xl">
+            <h1
+              class="text-5xl md:text-6xl font-bold text-white leading-tight mb-6"
+            >
+              Scale Your Business to New Heights
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-200 mb-8">
+              We help businesses reach the growth they deserve with proven
+              strategies and measurable results.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+              <button
+                class="bg-primary text-white px-8 py-4 !rounded-button font-medium hover:bg-opacity-90 transition whitespace-nowrap text-lg"
+              >
+                Book a Free Call
+              </button>
+              <button
+                class="bg-white text-gray-900 px-8 py-4 !rounded-button font-medium hover:bg-opacity-90 transition whitespace-nowrap text-lg"
+              >
+                View Case Studies
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Success Metrics Section -->
+    <section id="results" class="py-20 bg-white">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold mb-4">
+            Real Results for Real Businesses
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            Our clients see measurable growth in revenue, profit margins, and
+            audience engagement. Here's what our approach can do for your
+            business.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div class="bg-white rounded-lg shadow-lg p-8 h-96">
+            <h3 class="text-2xl font-semibold mb-4">Revenue Growth</h3>
+            <div id="revenueChart" class="w-full h-80"></div>
+          </div>
+          <div class="bg-white rounded-lg shadow-lg p-8 h-96">
+            <h3 class="text-2xl font-semibold mb-4">Audience Engagement</h3>
+            <div id="engagementChart" class="w-full h-80"></div>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+          <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+            <div class="text-5xl font-bold text-primary mb-4">+147%</div>
+            <h3 class="text-xl font-semibold mb-2">Average Revenue Increase</h3>
+            <p class="text-gray-600">
+              For clients who completed our 6-month program
+            </p>
+          </div>
+          <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+            <div class="text-5xl font-bold text-primary mb-4">+83%</div>
+            <h3 class="text-xl font-semibold mb-2">Profit Margin Growth</h3>
+            <p class="text-gray-600">
+              Through operational efficiency improvements
+            </p>
+          </div>
+          <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+            <div class="text-5xl font-bold text-primary mb-4">3.2x</div>
+            <h3 class="text-xl font-semibold mb-2">Audience Growth</h3>
+            <p class="text-gray-600">Average increase in qualified leads</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Video Testimonials Section -->
+    <section id="testimonials" class="py-20 bg-gray-50">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold mb-4">
+            Success Stories from Our Clients
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            Hear directly from business owners who have transformed their
+            companies with our scaling strategies.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Testimonial 1 -->
+          <div class="testimonial-video">
+            <div class="relative h-64 bg-gray-200 rounded mb-4">
+              <img
+                src="https://readdy.ai/api/search-image?query=professional%20middle-aged%20woman%20CEO%20in%20business%20attire%2C%20confident%20expression%2C%20office%20environment%2C%20neutral%20background%2C%20professional%20headshot%20style%2C%20high%20quality%20portrait&width=600&height=400&seq=2&orientation=landscape"
+                alt="Sarah Johnson - CEO of TechGrowth"
+                class="w-full h-full object-cover rounded"
+              />
+              <div class="play-button">
+                <div class="w-12 h-12 flex items-center justify-center">
+                  <i class="ri-play-fill ri-2x text-white"></i>
+                </div>
+              </div>
+            </div>
+            <h3 class="text-xl font-semibold">Sarah Johnson</h3>
+            <p class="text-gray-600">CEO, TechGrowth Solutions</p>
+            <p class="mt-2">
+              "Our revenue increased by 215% in just 8 months after implementing
+              the strategies."
+            </p>
+          </div>
+          <!-- Testimonial 2 -->
+          <div class="testimonial-video">
+            <div class="relative h-64 bg-gray-200 rounded mb-4">
+              <img
+                src="https://readdy.ai/api/search-image?query=professional%20Asian%20man%20in%20business%20casual%20attire%2C%2030s%2C%20confident%20smile%2C%20modern%20office%20background%2C%20professional%20headshot%20style%2C%20high%20quality%20portrait&width=600&height=400&seq=3&orientation=landscape"
+                alt="David Chen - Founder of EcoLife"
+                class="w-full h-full object-cover rounded"
+              />
+              <div class="play-button">
+                <div class="w-12 h-12 flex items-center justify-center">
+                  <i class="ri-play-fill ri-2x text-white"></i>
+                </div>
+              </div>
+            </div>
+            <h3 class="text-xl font-semibold">David Chen</h3>
+            <p class="text-gray-600">Founder, EcoLife Products</p>
+            <p class="mt-2">
+              "We went from struggling to scale to managing rapid growth in less
+              than a year."
+            </p>
+          </div>
+          <!-- Testimonial 3 -->
+          <div class="testimonial-video">
+            <div class="relative h-64 bg-gray-200 rounded mb-4">
+              <img
+                src="https://readdy.ai/api/search-image?query=professional%20African%20American%20woman%20entrepreneur%20in%20modern%20business%20attire%2C%20confident%20pose%2C%20contemporary%20office%20setting%2C%20professional%20headshot%20style%2C%20high%20quality%20portrait&width=600&height=400&seq=4&orientation=landscape"
+                alt="Michelle Williams - Director of GrowFast"
+                class="w-full h-full object-cover rounded"
+              />
+              <div class="play-button">
+                <div class="w-12 h-12 flex items-center justify-center">
+                  <i class="ri-play-fill ri-2x text-white"></i>
+                </div>
+              </div>
+            </div>
+            <h3 class="text-xl font-semibold">Michelle Williams</h3>
+            <p class="text-gray-600">Director, GrowFast Marketing</p>
+            <p class="mt-2">
+              "Our client base expanded by 178% and we doubled our team size in
+              10 months."
+            </p>
+          </div>
+        </div>
+        <div class="mt-12 text-center">
+          <button
+            class="bg-primary text-white px-8 py-3 !rounded-button font-medium hover:bg-opacity-90 transition whitespace-nowrap"
+          >
+            View All Success Stories
+          </button>
+        </div>
+      </div>
+    </section>
+    <!-- Portfolio Showcase Section -->
+    <section id="portfolio" class="py-20 bg-white">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold mb-4">Our Work in Action</h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            Take a peek at how we've helped businesses transform their
+            operations and achieve sustainable growth.
+          </p>
+        </div>
+        <div class="flex justify-center mb-10">
+          <div class="inline-flex bg-gray-100 p-1 rounded-full">
+            <button
+              id="filterAll"
+              class="px-6 py-2 rounded-full bg-primary text-white whitespace-nowrap"
+            >
+              All Projects
+            </button>
+            <button
+              id="filterEcommerce"
+              class="px-6 py-2 rounded-full text-gray-700 hover:bg-gray-200 whitespace-nowrap"
+            >
+              E-commerce
+            </button>
+            <button
+              id="filterSaas"
+              class="px-6 py-2 rounded-full text-gray-700 hover:bg-gray-200 whitespace-nowrap"
+            >
+              SaaS
+            </button>
+            <button
+              id="filterService"
+              class="px-6 py-2 rounded-full text-gray-700 hover:bg-gray-200 whitespace-nowrap"
+            >
+              Service Business
+            </button>
+          </div>
+        </div>
+        <div
+          id="portfolioGrid"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          <!-- Project 1 -->
+          <div
+            class="bg-white rounded-lg shadow-lg overflow-hidden"
+            data-category="ecommerce"
+          >
+            <div class="before-after-slider h-64">
+              <div class="slider-before">
+                <img
+                  src="https://readdy.ai/api/search-image?query=e-commerce%20website%20with%20poor%20design%2C%20cluttered%20layout%2C%20low-quality%20product%20images%2C%20basic%20template%20look%2C%20outdated%20style%2C%20before%20optimization&width=600&height=400&seq=5&orientation=landscape"
+                  alt="Before"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div class="slider-after">
+                <img
+                  src="https://readdy.ai/api/search-image?query=modern%20sleek%20e-commerce%20website%20with%20professional%20product%20photography%2C%20clean%20minimalist%20design%2C%20optimized%20layout%2C%20contemporary%20style%2C%20after%20optimization&width=600&height=400&seq=6&orientation=landscape"
+                  alt="After"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">
+                LuxeHome E-commerce Redesign
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Complete platform overhaul resulting in 187% increase in
+                conversion rate and 143% growth in average order value.
+              </p>
+              <div class="flex justify-between">
+                <span class="text-sm bg-gray-100 px-3 py-1 rounded-full"
+                  >E-commerce</span
+                >
+                <button class="text-primary font-medium flex items-center">
+                  View Case Study
+                  <i class="ri-arrow-right-line ml-1"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Project 2 -->
+          <div
+            class="bg-white rounded-lg shadow-lg overflow-hidden"
+            data-category="ecommerce"
+          >
+            <div class="before-after-slider h-64">
+              <div class="slider-before">
+                <img
+                  src="https://readdy.ai/api/search-image?query=basic%20SaaS%20dashboard%20with%20cluttered%20interface%2C%20confusing%20navigation%2C%20generic%20design%2C%20outdated%20UI%20elements%2C%20before%20optimization&width=600&height=400&seq=7&orientation=landscape"
+                  alt="Before"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div class="slider-after">
+                <img
+                  src="https://readdy.ai/api/search-image?query=modern%20SaaS%20dashboard%20with%20clean%20interface%2C%20intuitive%20navigation%2C%20data%20visualization%2C%20sleek%20design%2C%20professional%20UI%2C%20after%20optimization&width=600&height=400&seq=8&orientation=landscape"
+                  alt="After"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">
+                CloudMetrics SaaS Platform
+              </h3>
+              <p class="text-gray-600 mb-4">
+                User experience redesign and marketing strategy that increased
+                user retention by 76% and reduced churn by 42%.
+              </p>
+              <div class="flex justify-between">
+                <span class="text-sm bg-gray-100 px-3 py-1 rounded-full"
+                  >SaaS</span
+                >
+                <button class="text-primary font-medium flex items-center">
+                  View Case Study
+                  <i class="ri-arrow-right-line ml-1"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Project 3 -->
+          <div
+            class="bg-white rounded-lg shadow-lg overflow-hidden"
+            data-category="ecommerce"
+          >
+            <div class="before-after-slider h-64">
+              <div class="slider-before">
+                <img
+                  src="https://readdy.ai/api/search-image?query=local%20service%20business%20with%20basic%20branding%2C%20generic%20marketing%20materials%2C%20inconsistent%20visual%20identity%2C%20before%20professional%20marketing&width=600&height=400&seq=9&orientation=landscape"
+                  alt="Before"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div class="slider-after">
+                <img
+                  src="https://readdy.ai/api/search-image?query=professional%20service%20business%20with%20cohesive%20branding%2C%20high-end%20marketing%20materials%2C%20consistent%20visual%20identity%2C%20after%20professional%20marketing&width=600&height=400&seq=10&orientation=landscape"
+                  alt="After"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">
+                Elite Financial Advisors
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Complete brand transformation and lead generation system that
+                increased qualified leads by 215% and client acquisition by 94%.
+              </p>
+              <div class="flex justify-between">
+                <span class="text-sm bg-gray-100 px-3 py-1 rounded-full"
+                  >Service Business</span
+                >
+                <button class="text-primary font-medium flex items-center">
+                  View Case Study
+                  <i class="ri-arrow-right-line ml-1"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-12 text-center">
+          <a
+            href="https://readdy.ai/home/0892812b-ab58-431c-910e-8802e1e08488/140e6cc1-82f4-47cd-ac39-cec76aa93e9d"
+            data-readdy="true"
+          >
+            <button
+              class="bg-primary text-white px-8 py-3 !rounded-button font-medium hover:bg-opacity-90 transition whitespace-nowrap"
+            >
+              Explore Full Portfolio
+            </button>
+          </a>
+        </div>
+      </div>
+    </section>
+    <!-- Booking Section -->
+    <section id="booking" class="py-20 bg-gray-50">
+      <div class="container mx-auto px-6">
+        <div
+          class="max-w-5xl mx-auto bg-white rounded-xl shadow-xl overflow-hidden"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-2">
+            <div class="p-10 md:p-12 bg-primary text-white">
+              <h2 class="text-3xl font-bold mb-6">
+                Ready to Scale Your Business?
+              </h2>
+              <p class="text-lg mb-8">
+                Book a free 30-minute strategy call with our growth experts.
+                We'll analyze your business and provide actionable insights - no
+                obligation.
+              </p>
+              <div class="mb-8">
+                <div class="flex items-start mb-4">
+                  <div
+                    class="w-10 h-10 flex items-center justify-center bg-white bg-opacity-20 rounded-full mr-4 shrink-0"
+                  >
+                    <i class="ri-check-line ri-lg text-white"></i>
+                  </div>
+                  <p>Personalized growth strategy tailored to your business</p>
+                </div>
+                <div class="flex items-start mb-4">
+                  <div
+                    class="w-10 h-10 flex items-center justify-center bg-white bg-opacity-20 rounded-full mr-4 shrink-0"
+                  >
+                    <i class="ri-check-line ri-lg text-white"></i>
+                  </div>
+                  <p>Identify your biggest growth opportunities</p>
+                </div>
+                <div class="flex items-start">
+                  <div
+                    class="w-10 h-10 flex items-center justify-center bg-white bg-opacity-20 rounded-full mr-4 shrink-0"
+                  >
+                    <i class="ri-check-line ri-lg text-white"></i>
+                  </div>
+                  <p>Actionable steps you can implement immediately</p>
+                </div>
+              </div>
+              <div class="bg-white bg-opacity-10 p-6 rounded-lg">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-12 h-12 flex items-center justify-center bg-white rounded-full mr-4 shrink-0"
+                  >
+                    <i class="ri-user-voice-line ri-lg text-primary"></i>
+                  </div>
+                  <div>
+                    <h3 class="font-semibold">James Wilson</h3>
+                    <p class="text-sm">Growth Strategy Expert</p>
+                  </div>
+                </div>
+                <p class="italic">
+                  "Our free strategy calls have helped hundreds of businesses
+                  identify their path to sustainable growth."
+                </p>
+              </div>
+            </div>
+            <div class="p-10 md:p-12">
+              <h3 class="text-2xl font-semibold mb-6">
+                Book Your Free Strategy Call
+              </h3>
+              <form>
+                <div class="mb-6">
+                  <label class="block text-gray-700 mb-2" for="name"
+                    >Full Name</label
+                  >
+                  <input
+                    type="text"
+                    id="name"
+                    class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    placeholder="John Smith"
+                  />
+                </div>
+                <div class="mb-6">
+                  <label class="block text-gray-700 mb-2" for="email"
+                    >Email Address</label
+                  >
+                  <input
+                    type="email"
+                    id="email"
+                    class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    placeholder="john@example.com"
+                  />
+                </div>
+                <div class="mb-6">
+                  <label class="block text-gray-700 mb-2" for="phone"
+                    >Phone Number</label
+                  >
+                  <input
+                    type="tel"
+                    id="phone"
+                    class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    placeholder="+1 (555) 123-4567"
+                  />
+                </div>
+                <div class="mb-6">
+                  <label class="block text-gray-700 mb-2">Select a Date</label>
+                  <div class="date-selector">
+                    <button
+                      type="button"
+                      id="dateButton"
+                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-left flex justify-between items-center"
+                    >
+                      <span id="selectedDate">Select a date</span>
+                      <i class="ri-arrow-down-s-line"></i>
+                    </button>
+                    <div id="dateDropdown" class="date-dropdown p-2">
+                      <div
+                        class="date-option p-2 hover:bg-gray-100 rounded cursor-pointer"
+                      >
+                        May 3, 2025 (Friday)
+                      </div>
+                      <div
+                        class="date-option p-2 hover:bg-gray-100 rounded cursor-pointer"
+                      >
+                        May 4, 2025 (Saturday)
+                      </div>
+                      <div
+                        class="date-option p-2 hover:bg-gray-100 rounded cursor-pointer"
+                      >
+                        May 5, 2025 (Sunday)
+                      </div>
+                      <div
+                        class="date-option p-2 hover:bg-gray-100 rounded cursor-pointer"
+                      >
+                        May 6, 2025 (Monday)
+                      </div>
+                      <div
+                        class="date-option p-2 hover:bg-gray-100 rounded cursor-pointer"
+                      >
+                        May 7, 2025 (Tuesday)
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-6">
+                  <label class="block text-gray-700 mb-2">Select a Time</label>
+                  <div class="time-selector">
+                    <button
+                      type="button"
+                      id="timeButton"
+                      class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-left flex justify-between items-center"
+                    >
+                      <span id="selectedTime">Select a time</span>
+                      <i class="ri-arrow-down-s-line"></i>
+                    </button>
+                    <div id="timeDropdown" class="time-dropdown p-2">
+                      <div
+                        class="time-option p-2 hover:bg-gray-100 rounded cursor-pointer"
+                      >
+                        9:00 AM
+                      </div>
+                      <div
+                        class="time-option p-2 hover:bg-gray-100 rounded cursor-pointer"
+                      >
+                        10:00 AM
+                      </div>
+                      <div
+                        class="time-option p-2 hover:bg-gray-100 rounded cursor-pointer"
+                      >
+                        11:00 AM
+                      </div>
+                      <div
+                        class="time-option p-2 hover:bg-gray-100 rounded cursor-pointer"
+                      >
+                        1:00 PM
+                      </div>
+                      <div
+                        class="time-option p-2 hover:bg-gray-100 rounded cursor-pointer"
+                      >
+                        2:00 PM
+                      </div>
+                      <div
+                        class="time-option p-2 hover:bg-gray-100 rounded cursor-pointer"
+                      >
+                        3:00 PM
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-6">
+                  <label class="block text-gray-700 mb-2"
+                    >Business Information</label
+                  >
+                  <textarea
+                    class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    rows="3"
+                    placeholder="Tell us a bit about your business and what you hope to achieve"
+                  ></textarea>
+                </div>
+                <div class="mb-6 flex items-start">
+                  <label class="custom-checkbox">
+                    <input type="checkbox" />
+                    <span class="checkmark"></span>
+                  </label>
+                  <span class="text-gray-700"
+                    >I agree to receive communications about services and
+                    special offers</span
+                  >
+                </div>
+                <button
+                  type="submit"
+                  class="w-full bg-primary text-white py-4 !rounded-button font-medium hover:bg-opacity-90 transition whitespace-nowrap"
+                >
+                  Book My Free Strategy Call
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+      <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+          <div>
+            <div class="font-['Pacifico'] text-3xl text-white mb-6">logo</div>
+            <p class="text-gray-400 mb-6">
+              We help businesses reach the growth they deserve with proven
+              strategies and measurable results.
+            </p>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition"
+              >
+                <i class="ri-linkedin-fill"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition"
+              >
+                <i class="ri-twitter-x-fill"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition"
+              >
+                <i class="ri-facebook-fill"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition"
+              >
+                <i class="ri-instagram-fill"></i>
+              </a>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-6">Services</h3>
+            <ul class="space-y-3">
+              <li>
+                <a href="#" class="text-gray-400 hover:text-white transition"
+                  >Growth Strategy</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-white transition"
+                  >Marketing Optimization</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-white transition"
+                  >Sales Funnel Design</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-white transition"
+                  >Operational Scaling</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-white transition"
+                  >Team Development</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-6">Resources</h3>
+            <ul class="space-y-3">
+              <li>
+                <a href="#" class="text-gray-400 hover:text-white transition"
+                  >Case Studies</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-white transition"
+                  >Blog</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-white transition"
+                  >Growth Guides</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-white transition"
+                  >Free Assessment</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-white transition"
+                  >FAQ</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-6">Contact</h3>
+            <ul class="space-y-3">
+              <li class="flex items-start">
+                <div class="w-5 h-5 flex items-center justify-center mr-3 mt-1">
+                  <i class="ri-map-pin-line"></i>
+                </div>
+                <span class="text-gray-400"
+                  >123 Growth Avenue, New York, NY 10001</span
+                >
+              </li>
+              <li class="flex items-start">
+                <div class="w-5 h-5 flex items-center justify-center mr-3 mt-1">
+                  <i class="ri-mail-line"></i>
+                </div>
+                <span class="text-gray-400">contact@growthaccelerator.com</span>
+              </li>
+              <li class="flex items-start">
+                <div class="w-5 h-5 flex items-center justify-center mr-3 mt-1">
+                  <i class="ri-phone-line"></i>
+                </div>
+                <span class="text-gray-400">+1 (555) 123-4567</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center"
+        >
+          <p class="text-gray-500 mb-4 md:mb-0">
+            © 2025 Growth Accelerator. All rights reserved.
+          </p>
+          <div class="flex space-x-6">
+            <a href="#" class="text-gray-500 hover:text-white transition"
+              >Privacy Policy</a
+            >
+            <a href="#" class="text-gray-500 hover:text-white transition"
+              >Terms of Service</a
+            >
+            <a href="#" class="text-gray-500 hover:text-white transition"
+              >Cookie Policy</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Video Modal -->
+    <div id="videoModal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="aspect-w-16 aspect-h-9">
+          <div class="w-full h-0 pb-[56.25%] relative bg-black">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <p class="text-white text-xl">Video would play here</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Portfolio Filtering
+        const filterAll = document.getElementById("filterAll");
+        const filterEcommerce = document.getElementById("filterEcommerce");
+        const filterSaas = document.getElementById("filterSaas");
+        const filterService = document.getElementById("filterService");
+        const portfolioGrid = document.getElementById("portfolioGrid");
+        const portfolioItems = portfolioGrid.querySelectorAll("[data-category]");
+        function setActiveFilter(activeButton) {
+          [filterAll, filterEcommerce, filterSaas, filterService].forEach(
+            (button) => {
+              button.classList.remove("bg-primary", "text-white");
+              button.classList.add("text-gray-700", "hover:bg-gray-200");
+            },
+          );
+          activeButton.classList.remove("text-gray-700", "hover:bg-gray-200");
+          activeButton.classList.add("bg-primary", "text-white");
+        }
+        function filterPortfolio(category) {
+          portfolioItems.forEach((item) => {
+            if (category === "all" || item.dataset.category === category) {
+              item.style.display = "";
+            } else {
+              item.style.display = "none";
+            }
+          });
+        }
+        filterAll.addEventListener("click", () => {
+          setActiveFilter(filterAll);
+          filterPortfolio("all");
+        });
+        filterEcommerce.addEventListener("click", () => {
+          setActiveFilter(filterEcommerce);
+          filterPortfolio("ecommerce");
+        });
+        filterSaas.addEventListener("click", () => {
+          setActiveFilter(filterSaas);
+          filterPortfolio("saas");
+        });
+        filterService.addEventListener("click", () => {
+          setActiveFilter(filterService);
+          filterPortfolio("service");
+        });
+        // Revenue Chart
+        const revenueChart = echarts.init(document.getElementById("revenueChart"));
+        const revenueOption = {
+          animation: false,
+          tooltip: {
+            trigger: "axis",
+            backgroundColor: "rgba(255, 255, 255, 0.8)",
+            textStyle: {
+              color: "#1f2937",
+            },
+          },
+          legend: {
+            data: ["Before", "After"],
+            textStyle: {
+              color: "#1f2937",
+            },
+          },
+          grid: {
+            left: "3%",
+            right: "4%",
+            bottom: "3%",
+            containLabel: true,
+          },
+          xAxis: {
+            type: "category",
+            boundaryGap: false,
+            data: ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"],
+            axisLine: {
+              lineStyle: {
+                color: "#d1d5db",
+              },
+            },
+            axisLabel: {
+              color: "#1f2937",
+            },
+          },
+          yAxis: {
+            type: "value",
+            axisLine: {
+              lineStyle: {
+                color: "#d1d5db",
+              },
+            },
+            axisLabel: {
+              color: "#1f2937",
+              formatter: "${value}K",
+            },
+            splitLine: {
+              lineStyle: {
+                color: "#e5e7eb",
+              },
+            },
+          },
+          series: [
+            {
+              name: "Before",
+              type: "line",
+              smooth: true,
+              lineStyle: {
+                width: 3,
+                color: "rgba(141, 211, 199, 1)",
+              },
+              symbol: "none",
+              areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  {
+                    offset: 0,
+                    color: "rgba(141, 211, 199, 0.2)",
+                  },
+                  {
+                    offset: 1,
+                    color: "rgba(141, 211, 199, 0)",
+                  },
+                ]),
+              },
+              data: [25, 28, 32, 30, 35, 38],
+            },
+            {
+              name: "After",
+              type: "line",
+              smooth: true,
+              lineStyle: {
+                width: 3,
+                color: "rgba(87, 181, 231, 1)",
+              },
+              symbol: "none",
+              areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  {
+                    offset: 0,
+                    color: "rgba(87, 181, 231, 0.2)",
+                  },
+                  {
+                    offset: 1,
+                    color: "rgba(87, 181, 231, 0)",
+                  },
+                ]),
+              },
+              data: [30, 42, 58, 70, 82, 95],
+            },
+          ],
+        };
+        revenueChart.setOption(revenueOption);
+        // Engagement Chart
+        const engagementChart = echarts.init(
+          document.getElementById("engagementChart"),
+        );
+        const engagementOption = {
+          animation: false,
+          tooltip: {
+            trigger: "axis",
+            backgroundColor: "rgba(255, 255, 255, 0.8)",
+            textStyle: {
+              color: "#1f2937",
+            },
+          },
+          legend: {
+            data: ["Website Traffic", "Lead Conversion", "Social Engagement"],
+            textStyle: {
+              color: "#1f2937",
+            },
+          },
+          grid: {
+            left: "3%",
+            right: "4%",
+            bottom: "3%",
+            containLabel: true,
+          },
+          xAxis: {
+            type: "category",
+            data: ["Before", "After 3 Months", "After 6 Months"],
+            axisLine: {
+              lineStyle: {
+                color: "#d1d5db",
+              },
+            },
+            axisLabel: {
+              color: "#1f2937",
+            },
+          },
+          yAxis: {
+            type: "value",
+            axisLine: {
+              lineStyle: {
+                color: "#d1d5db",
+              },
+            },
+            axisLabel: {
+              color: "#1f2937",
+              formatter: "{value}%",
+            },
+            splitLine: {
+              lineStyle: {
+                color: "#e5e7eb",
+              },
+            },
+          },
+          series: [
+            {
+              name: "Website Traffic",
+              type: "bar",
+              barWidth: "20%",
+              itemStyle: {
+                color: "rgba(87, 181, 231, 1)",
+                borderRadius: [4, 4, 0, 0],
+              },
+              data: [100, 215, 320],
+            },
+            {
+              name: "Lead Conversion",
+              type: "bar",
+              barWidth: "20%",
+              itemStyle: {
+                color: "rgba(251, 191, 114, 1)",
+                borderRadius: [4, 4, 0, 0],
+              },
+              data: [100, 178, 240],
+            },
+            {
+              name: "Social Engagement",
+              type: "bar",
+              barWidth: "20%",
+              itemStyle: {
+                color: "rgba(252, 141, 98, 1)",
+                borderRadius: [4, 4, 0, 0],
+              },
+              data: [100, 150, 280],
+            },
+          ],
+        };
+        engagementChart.setOption(engagementOption);
+        // Resize charts when window size changes
+        window.addEventListener("resize", function () {
+          revenueChart.resize();
+          engagementChart.resize();
+        });
+        // Video Modal
+        const modal = document.getElementById("videoModal");
+        const testimonialVideos = document.querySelectorAll(".testimonial-video");
+        const closeModal = document.querySelector(".close-modal");
+        testimonialVideos.forEach((video) => {
+          video.addEventListener("click", () => {
+            modal.style.display = "flex";
+          });
+        });
+        closeModal.addEventListener("click", () => {
+          modal.style.display = "none";
+        });
+        window.addEventListener("click", (event) => {
+          if (event.target === modal) {
+            modal.style.display = "none";
+          }
+        });
+        // Date Selector
+        const dateButton = document.getElementById("dateButton");
+        const dateDropdown = document.getElementById("dateDropdown");
+        const dateOptions = document.querySelectorAll(".date-option");
+        const selectedDate = document.getElementById("selectedDate");
+        dateButton.addEventListener("click", () => {
+          if (dateDropdown.style.display === "block") {
+            dateDropdown.style.display = "none";
+          } else {
+            dateDropdown.style.display = "block";
+            timeDropdown.style.display = "none"; // Close time dropdown if open
+          }
+        });
+        dateOptions.forEach((option) => {
+          option.addEventListener("click", () => {
+            selectedDate.textContent = option.textContent;
+            dateDropdown.style.display = "none";
+          });
+        });
+        // Time Selector
+        const timeButton = document.getElementById("timeButton");
+        const timeDropdown = document.getElementById("timeDropdown");
+        const timeOptions = document.querySelectorAll(".time-option");
+        const selectedTime = document.getElementById("selectedTime");
+        timeButton.addEventListener("click", () => {
+          if (timeDropdown.style.display === "block") {
+            timeDropdown.style.display = "none";
+          } else {
+            timeDropdown.style.display = "block";
+            dateDropdown.style.display = "none"; // Close date dropdown if open
+          }
+        });
+        timeOptions.forEach((option) => {
+          option.addEventListener("click", () => {
+            selectedTime.textContent = option.textContent;
+            timeDropdown.style.display = "none";
+          });
+        });
+        // Close dropdowns when clicking outside
+        document.addEventListener("click", (event) => {
+          if (
+            !event.target.closest(".date-selector") &&
+            dateDropdown.style.display === "block"
+          ) {
+            dateDropdown.style.display = "none";
+          }
+          if (
+            !event.target.closest(".time-selector") &&
+            timeDropdown.style.display === "block"
+          ) {
+            timeDropdown.style.display = "none";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
